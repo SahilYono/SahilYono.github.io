@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Game Developer Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: fadeInDown 1s;
+        }
+
+        header p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            border: 2px solid white;
+            border-radius: 5px;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-3px);
+        }
+
+        .about {
+            background: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .about p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            color: #555;
+        }
+
+        .skills {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .skill-tag {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+        }
+
+        .projects {
+            padding: 60px 0;
+        }
+
+        .projects h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #333;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .project-content {
+            padding: 25px;
+        }
+
+        .project-content h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .project-meta {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .project-content p {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .contact {
+            background: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .contact p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .contact-email {
+            font-size: 1.5em;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1em;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Your Name Here</h1>
+            <p>Game Developer | Unity Specialist | Level Designer</p>
+            <div class="social-links">
+                <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                <a href="https://yourname.itch.io" target="_blank">Itch.io</a>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <p>
+                I'm a passionate game developer with [X] years of experience creating engaging gameplay experiences. 
+                I specialize in [your specialty: Unity development, level design, game mechanics, etc.] and love 
+                bringing creative ideas to life through code and design.
+            </p>
+            <p>
+                Currently seeking opportunities in [indie studios, AAA companies, remote positions, etc.] 
+                where I can contribute my skills and continue growing as a developer.
+            </p>
+            <div class="skills">
+                <span class="skill-tag">Unity</span>
+                <span class="skill-tag">C#</span>
+                <span class="skill-tag">Game Design</span>
+                <span class="skill-tag">Level Design</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">Blender</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects">
+        <div class="container">
+            <h2>My Games</h2>
+            <div class="project-grid">
+                
+                <!-- PROJECT 1 - DUPLICATE THIS ENTIRE BLOCK FOR EACH GAME -->
+                <div class="project-card">
+                    <div class="project-image">
+                        Game Screenshot Here
+                    </div>
+                    <div class="project-content">
+                        <h3>Game Title 1</h3>
+                        <p class="project-meta">Genre: Action Platformer | Development Time: 3 months | Solo Project</p>
+                        <p>
+                            Brief description of your game. What makes it unique? What was the core gameplay loop? 
+                            What challenges did you solve? Keep it 2-3 sentences and focus on what you accomplished.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Unity</span>
+                            <span class="tech-tag">C#</span>
+                            <span class="tech-tag">2D</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://yourgame.itch.io" class="btn btn-primary" target="_blank">Play Game</a>
+                            <a href="https://github.com/yourrepo" class="btn btn-secondary" target="_blank">View Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJECT 2 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        Game Screenshot Here
+                    </div>
+                    <div class="project-content">
+                        <h3>Game Title 2</h3>
+                        <p class="project-meta">Genre: Puzzle Game | Game Jam Entry | Team of 3</p>
+                        <p>
+                            Created during [Game Jam Name]. My role: [Programmer/Designer/etc.]. Implemented the 
+                            core puzzle mechanics and level progression system. Achieved [ranking/downloads/etc.].
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Unity</span>
+                            <span class="tech-tag">C#</span>
+                            <span class="tech-tag">Puzzle</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-primary" target="_blank">Play Game</a>
+                            <a href="#" class="btn btn-secondary" target="_blank">Devlog</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJECT 3 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        Game Screenshot Here
+                    </div>
+                    <div class="project-content">
+                        <h3>Game Title 3</h3>
+                        <p class="project-meta">Genre: RPG | Development Time: 6 months | Personal Project</p>
+                        <p>
+                            A narrative-driven RPG featuring [key features]. Built a custom dialogue system and 
+                            inventory management. This project taught me [what you learned].
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Unity</span>
+                            <span class="tech-tag">C#</span>
+                            <span class="tech-tag">RPG Systems</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-primary" target="_blank">Play Game</a>
+                            <a href="#" class="btn btn-secondary" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="container">
+            <h2>Let's Work Together</h2>
+            <p>I'm currently open to job opportunities and collaborations.</p>
+            <a href="mailto:your.email@example.com" class="contact-email">your.email@example.com</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Your Name. Built with passion for games.</p>
+        </div>
+    </footer>
+</body>
+</html>
