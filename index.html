@@ -3,422 +3,1007 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAHIL - Game Developer </title>
+    <title>SAHIL CHAURASIYA — Game Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #0a0a0f;
+            --surface: #111118;
+            --card: #16161f;
+            --border: #2a2a38;
+            --accent: #7b6ef6;
+            --accent2: #e85d75;
+            --accent3: #3ecfb2;
+            --text: #e8e8f0;
+            --muted: #7a7a9a;
+            --glow: rgba(123, 110, 246, 0.18);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f4f4f4;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* ─── NOISE TEXTURE OVERLAY ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.4;
         }
 
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ─── HEADER ─── */
         header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-image: url('banner.jpg'); 
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: overlay;
-            color: white; 
-            padding: 80px 0;
-            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
             position: relative;
+            overflow: hidden;
+            background: var(--bg);
         }
 
+        /* Grid lines bg */
         header::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(102, 126, 234, 0); /* Purple overlay for readabilitII */
-            z-index: 0;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.35;
         }
 
-        header .container {
+        /* ── BANNER IMAGE AREA ──
+           Replace the gradient below with:
+           background-image: url('banner.jpg');
+           background-size: cover;
+           background-position: center;
+        */
+        header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 70% 50%,
+                rgba(123,110,246,0.12) 0%,
+                rgba(232,93,117,0.06) 50%,
+                transparent 80%);
+            pointer-events: none;
+        }
+
+        .header-inner {
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            padding: 80px 0;
+        }
+
+        .eyebrow {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.75em;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 36px;
+            height: 1px;
+            background: var(--accent);
         }
 
         header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            animation: fadeInDown 1s;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            animation: fadeUp 0.9s ease both;
         }
 
-        header p {
-            font-size: 1.3em;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-        .social-links {
-            margin-top: 20px;
+        header h1 span {
+            display: block;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .social-links a {
-            color: white;
+        .tagline {
+            font-size: 1.15em;
+            color: var(--muted);
+            font-weight: 300;
+            max-width: 480px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            animation: fadeUp 0.9s 0.15s ease both;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            animation: fadeUp 0.9s 0.3s ease both;
+        }
+
+        .nav-links a {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.82em;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text);
             text-decoration: none;
-            margin: 0 15px;
-            font-size: 1.1em;
-            padding: 10px 20px;
-            border: 2px solid white;
-            border-radius: 5px;
-            display: inline-block;
-            transition: all 0.3s;
+            padding: 11px 22px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            transition: all 0.25s;
+            background: rgba(255,255,255,0.03);
         }
 
-        .social-links a:hover {
-            background: white;
-            color: #667eea;
-            transform: translateY(-3px);
+        .nav-links a:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--glow);
         }
 
+        .nav-links a.resume {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .nav-links a.resume:hover {
+            background: #6a5ce0;
+            border-color: #6a5ce0;
+            color: #fff;
+        }
+
+        /* scroll indicator */
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 0.72em;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(var(--muted), transparent);
+            animation: scrollPulse 2s infinite;
+        }
+
+        /* ─── ABOUT ─── */
         .about {
-            background: white;
-            padding: 60px 0;
-            text-align: center;
+            background: var(--surface);
+            padding: 100px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.72em;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-label::before {
+            content: '';
+            display: inline-block;
+            width: 28px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
         }
 
         .about h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            color: #667eea;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
         }
 
         .about p {
-            font-size: 1.2em;
-            max-width: 800px;
-            margin: 0 auto 20px;
-            color: #555;
+            color: var(--muted);
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 16px;
         }
 
-        .skills {
+        .skills-col { padding-top: 8px; }
+
+        .skills-col h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.75em;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .skills-grid {
             display: flex;
-            justify-content: center;
             flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 10px;
         }
 
         .skill-tag {
-            background: #667eea;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 0.9em;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 2px;
+            font-size: 0.82em;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: default;
         }
 
+        .skill-tag:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--glow);
+        }
+
+        /* ─── PROJECTS ─── */
         .projects {
-            padding: 60px 0;
+            padding: 120px 0;
+            background: var(--bg);
         }
 
-        .projects h2 {
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 50px;
-            color: #333;
+        .projects-header {
+            margin-bottom: 70px;
         }
 
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+        .projects-header h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.05;
         }
 
+        .projects-header h2 em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--accent3), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ─── PROJECT CARD ─── */
         .project-card {
-            background: white;
-            border-radius: 10px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: 440px 1fr;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-color: var(--accent);
+            box-shadow: 0 0 40px rgba(123,110,246,0.08);
         }
 
-        .project-image {
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .project-card.reversed {
+            grid-template-columns: 1fr 440px;
+        }
+
+        .project-card.reversed .project-visual { order: 2; }
+        .project-card.reversed .project-content { order: 1; }
+
+        /* ── VISUAL / IMAGE AREA ── */
+        .project-visual {
+            position: relative;
+            min-height: 340px;
+            overflow: hidden;
+            background: var(--surface);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /*
+        ╔══════════════════════════════════════════════════════════════╗
+        ║  🎮 HOW TO ADD GAME IMAGES                                   ║
+        ║  1. LOGO: Replace the .game-logo-placeholder div with:       ║
+        ║     <img src="your-logo.png" class="game-logo-img" alt="...">║
+        ║  2. SCREENSHOT: Replace the .screenshot-placeholder div with:║
+        ║     <img src="your-screenshot.jpg" class="game-screenshot"   ║
+        ║          alt="gameplay screenshot">                           ║
+        ╚══════════════════════════════════════════════════════════════╝
+        */
+
+        .game-logo-area {
+            padding: 28px 28px 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .game-logo-placeholder {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            border: 1px dashed var(--border);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 1.5em;
-            font-weight: bold;
+            font-size: 0.6em;
+            color: var(--muted);
+            text-align: center;
+            line-height: 1.3;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.02);
         }
 
+        /* Replace .game-logo-placeholder with this when you have a logo: */
+        .game-logo-img {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .game-logo-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.72em;
+            color: var(--muted);
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .screenshot-area {
+            flex: 1;
+            position: relative;
+            min-height: 220px;
+        }
+
+        .screenshot-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 0.8em;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Default gradient bg per game (you'll replace with actual screenshot) */
+        .g1 .screenshot-placeholder { background: linear-gradient(135deg, #0d1b3e 0%, #1a3a6b 100%); }
+        .g2 .screenshot-placeholder { background: linear-gradient(135deg, #1a0d2e 0%, #3d1a6e 100%); }
+        .g3 .screenshot-placeholder { background: linear-gradient(135deg, #0d2e1e 0%, #0a4a3c 100%); }
+        .g4 .screenshot-placeholder { background: linear-gradient(135deg, #2e1a0d 0%, #6e3d0a 100%); }
+        .g5 .screenshot-placeholder { background: linear-gradient(135deg, #0d1a2e 0%, #1a3d6e 100%); }
+
+        /* Replace .screenshot-placeholder with: */
+        .game-screenshot {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .screenshot-icon {
+            font-size: 2em;
+            opacity: 0.3;
+        }
+
+        .screenshot-label {
+            font-size: 0.75em;
+            opacity: 0.5;
+            line-height: 1.4;
+        }
+
+        /* ── CONTENT SIDE ── */
         .project-content {
-            padding: 25px;
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.68em;
+            letter-spacing: 0.25em;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
         .project-content h3 {
-            font-size: 1.8em;
-            margin-bottom: 10px;
-            color: #333;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.7em;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            color: var(--text);
         }
 
         .project-meta {
-            color: #888;
-            font-size: 0.9em;
-            margin-bottom: 15px;
+            font-size: 0.82em;
+            color: var(--muted);
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 16px;
         }
 
-        .project-content p {
-            color: #555;
-            margin-bottom: 20px;
-            line-height: 1.6;
+        .project-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .project-meta span::before {
+            content: '·';
+            color: var(--accent);
+        }
+
+        .project-meta span:first-child::before { display: none; }
+
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex: 1;
+        }
+
+        .bullet-list li {
+            font-size: 0.88em;
+            color: var(--muted);
+            line-height: 1.65;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .bullet-list li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 0.9em;
         }
 
         .tech-stack {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
+            gap: 7px;
+            margin-bottom: 24px;
         }
 
         .tech-tag {
-            background: #f0f0f0;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.85em;
-            color: #666;
+            background: rgba(123,110,246,0.08);
+            border: 1px solid rgba(123,110,246,0.25);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 2px;
+            font-size: 0.76em;
+            font-weight: 500;
+            font-family: 'DM Sans', monospace;
         }
 
-        .project-links {
+        .project-actions {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
         }
 
         .btn {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.76em;
+            font-weight: 600;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
             padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 3px;
             text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.2s;
+            cursor: pointer;
         }
 
-        .btn-primary {
-            background: #667eea;
-            color: white;
+        .btn-play {
+            background: var(--accent);
+            color: #fff;
+            border: 1px solid var(--accent);
         }
 
-        .btn-primary:hover {
-            background: #5568d3;
+        .btn-play:hover {
+            background: #6a5ce0;
+            border-color: #6a5ce0;
         }
 
-        .btn-secondary {
-            background: #f0f0f0;
-            color: #333;
+        .btn-video {
+            background: transparent;
+            color: var(--accent2);
+            border: 1px solid var(--accent2);
         }
 
-        .btn-secondary:hover {
-            background: #e0e0e0;
+        .btn-video:hover {
+            background: rgba(232,93,117,0.1);
         }
 
+        .btn-github {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+
+        .btn-github:hover {
+            border-color: var(--text);
+            color: var(--text);
+        }
+
+        /* ─── CONTACT ─── */
         .contact {
-            background: white;
-            padding: 60px 0;
+            background: var(--surface);
+            padding: 120px 0;
+            border-top: 1px solid var(--border);
             text-align: center;
         }
 
         .contact h2 {
-            font-size: 2.5em;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
             margin-bottom: 20px;
-            color: #667eea;
+            line-height: 1.1;
+        }
+
+        .contact h2 em {
+            font-style: normal;
+            color: var(--accent);
         }
 
         .contact p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            color: #555;
+            color: var(--muted);
+            font-size: 1.1em;
+            max-width: 480px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
         }
 
         .contact-email {
-            font-size: 1.5em;
-            color: #667eea;
+            display: inline-block;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--text);
             text-decoration: none;
-            font-weight: bold;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 4px;
+            transition: color 0.2s;
         }
 
+        .contact-email:hover { color: var(--accent); }
+
+        /* ─── FOOTER ─── */
         footer {
-            background: #333;
-            color: white;
-            text-align: center;
+            background: var(--bg);
+            border-top: 1px solid var(--border);
             padding: 30px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        footer p {
+            font-size: 0.82em;
+            color: var(--muted);
+            letter-spacing: 0.05em;
         }
 
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2em;
-            }
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
 
-            header p {
-                font-size: 1em;
-            }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; }
+            50%       { opacity: 0.8; }
+        }
 
-            .project-grid {
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+
+            .project-card,
+            .project-card.reversed {
                 grid-template-columns: 1fr;
             }
+            .project-card.reversed .project-visual { order: 0; }
+            .project-card.reversed .project-content { order: 0; }
+
+            .project-visual { min-height: 260px; }
+            .project-content { padding: 28px 24px; }
+        }
+
+        @media (max-width: 600px) {
+            .project-content h3 { font-size: 1.3em; }
+            .nav-links a { font-size: 0.75em; padding: 9px 16px; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>SAHIL CHAURASIYA</h1>
-            <p>Game Developer | Unity Specialist | Level Designer | AR/VR</p>
-            <div class="social-links">
+
+<!-- ═══════════════════════════════════════════ HEADER ═══ -->
+<header>
+    <div class="container">
+        <div class="header-inner">
+            <div class="eyebrow">Available for opportunities</div>
+            <h1>
+                SAHIL
+                <span>CHAURASIYA</span>
+            </h1>
+            <p class="tagline">Game Developer · Unity Specialist · Level Designer · AR/VR</p>
+            <nav class="nav-links">
                 <a href="https://github.com/SahilYono" target="_blank">GitHub</a>
                 <a href="https://sahil-yono.itch.io" target="_blank">Itch.io</a>
                 <a href="https://www.linkedin.com/in/sahilyono" target="_blank">LinkedIn</a>
-                <a href="https://drive.google.com/file/d/1KaEo-lE-dAokSg_EN_gumSBHeY_nS7gB/view?usp=sharing" target="_blank">Resume</a>
+                <a href="https://drive.google.com/file/d/1KaEo-lE-dAokSg_EN_gumSBHeY_nS7gB/view?usp=sharing" target="_blank" class="resume">Resume ↗</a>
+            </nav>
+        </div>
+    </div>
+    <div class="scroll-hint">
+        <div class="scroll-line"></div>
+        Scroll
+    </div>
+</header>
+
+<!-- ═══════════════════════════════════════════ ABOUT ═══ -->
+<section class="about">
+    <div class="container">
+        <div class="about-grid">
+            <div>
+                <div class="section-label">Who I Am</div>
+                <h2>3 years building things people <em style="font-style:normal;color:var(--accent)">want to play</em></h2>
+                <p>I'm a passionate game developer specialising in Unity — from fast-paced naval shooters and VR interaction systems to cross-platform multiplayer board games and mobile puzzle titles.</p>
+                <p>Currently seeking opportunities at indie studios, AAA companies, or remote positions where I can contribute and keep growing.</p>
+            </div>
+            <div class="skills-col">
+                <h3>Skills &amp; Tools</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">Unity</span>
+                    <span class="skill-tag">C#</span>
+                    <span class="skill-tag">Level Design</span>
+                    <span class="skill-tag">UI Control</span>
+                    <span class="skill-tag">AR / VR</span>
+                    <span class="skill-tag">Meta XR SDK</span>
+                    <span class="skill-tag">Netcode</span>
+                    <span class="skill-tag">PlayFab</span>
+                    <span class="skill-tag">Unity Ads</span>
+                    <span class="skill-tag">Scriptable Objects</span>
+                    <span class="skill-tag">Git / VCS</span>
+                    <span class="skill-tag">Timeline</span>
+                    <span class="skill-tag">Particle System</span>
+                    <span class="skill-tag">Android / WebGL</span>
+                </div>
             </div>
         </div>
-    </header>
+    </div>
+</section>
 
-    <section class="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <p>
-                I'm a passionate game developer with 3 years of experience creating engaging gameplay experiences. 
-                I specialize in Unity development, C# controls, game mechanics, Ui, Game flow
-                and love bringing creative ideas to life through code and design.
-            </p>
-            <p>
-                Currently seeking opportunities in indie studios, AAA companies, remote positions, etc. 
-                where I can contribute my skills and continue growing as a developer.
-            </p>
-            <div class="skills">
-                <span class="skill-tag">Unity</span>
-                <span class="skill-tag">C#</span>
-                <span class="skill-tag">Level Design</span>
-                <span class="skill-tag">Ui Control</span>
-                <span class="skill-tag">AR / VR</span>
-                <span class="skill-tag">Git / Unity version control</span>
+<!-- ═══════════════════════════════════════════ PROJECTS ═══ -->
+<section class="projects">
+    <div class="container">
+        <div class="projects-header">
+            <div class="section-label">Selected Work</div>
+            <h2>Games I've <em>shipped</em></h2>
+        </div>
+
+        <!-- ────────────────── GAME 1 · WAR SHIP 3D ────────────── -->
+        <div class="project-card g1">
+
+            <div class="project-visual">
+                <div class="game-logo-area">
+                    <!--
+                    ✦ LOGO: replace this div with →
+                    <img src="warship-logo.png" class="game-logo-img" alt="War Ship 3D logo">
+                    -->
+                    <div class="game-logo-placeholder">LOGO<br>HERE</div>
+                    <span class="game-logo-title">War Ship 3D</span>
+                </div>
+                <div class="screenshot-area">
+                    <!--
+                    ✦ SCREENSHOT: replace this div with →
+                    <img src="warship-screenshot.jpg" class="game-screenshot" alt="War Ship 3D gameplay">
+                    -->
+                    <div class="screenshot-placeholder">
+                        <div class="screenshot-icon">🚢</div>
+                        <div class="screenshot-label">Add gameplay screenshot<br><code>warship-screenshot.jpg</code></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <div class="project-number">01 / 05</div>
+                <h3>War Ship 3D</h3>
+                <div class="project-meta">
+                    <span>3D Naval Combat</span>
+                    <span>Unity 3D</span>
+                    <span>Solo Project</span>
+                </div>
+                <ul class="bullet-list">
+                    <li>Developed dynamic 3D open-world naval combat game with a master Timeline system orchestrating player ship movement, enemy spawn patterns, and cinematic sequences.</li>
+                    <li>Implemented laser weapon system using Unity Particle System with mouse-based Input Action Map for precise targeting and responsive combat mechanics.</li>
+                    <li>Engineered multiple enemy AI ships with individual Timeline animations, health management systems, and collision detection for realistic naval warfare.</li>
+                    <li>Created comprehensive UI scoreboard tracking player performance by enemy destruction count, integrated with dynamic audio and Unity Ads monetisation.</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-tag">Unity 3D</span>
+                    <span class="tech-tag">Timeline</span>
+                    <span class="tech-tag">Terrain Tool</span>
+                    <span class="tech-tag">Particle System</span>
+                    <span class="tech-tag">Input Action Map</span>
+                    <span class="tech-tag">Unity Ads</span>
+                </div>
+                <div class="project-actions">
+                    <!--
+                    ✦ LINKS: fill in your actual URLs below ↓
+                    -->
+                    <a href="YOUR_ITCH_OR_PLAY_LINK_HERE" class="btn btn-play" target="_blank">▶ Play Game</a>
+                    <a href="YOUR_YOUTUBE_GAMEPLAY_VIDEO_HERE" class="btn btn-video" target="_blank">▶ Gameplay Video</a>
+                    <!-- GitHub optional — add if repo is public:
+                    <a href="YOUR_GITHUB_REPO_HERE" class="btn btn-github" target="_blank">⌥ GitHub</a>
+                    -->
+                </div>
             </div>
         </div>
-    </section>
 
-    <section class="projects">
-        <div class="container">
-            <h2>My Games</h2>
-            <div class="project-grid">
-                
-                <!-- PROJECT 1 - DUPLICATE THIS ENTIRE BLOCK FOR EACH GAME -->
-                <div class="project-card">
-                    <div class="project-image">
-                        Game Screenshot Here
-                    </div>
-                    <div class="project-content">
-                        <h3>Game Title 1</h3>
-                        <p class="project-meta">Genre: Action Platformer | Development Time: 3 months | Solo Project</p>
-                        <p>
-                            Brief description of your game. What makes it unique? What was the core gameplay loop? 
-                            What challenges did you solve? Keep it 2-3 sentences and focus on what you accomplished.
-                        </p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Unity</span>
-                            <span class="tech-tag">C#</span>
-                            <span class="tech-tag">2D</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://yourgame.itch.io" class="btn btn-primary" target="_blank">Play Game</a>
-                            <a href="https://github.com/yourrepo" class="btn btn-secondary" target="_blank">View Code</a>
-                        </div>
+        <!-- ────────────────── GAME 2 · ARROW OUT ────────────── -->
+        <div class="project-card reversed g2">
+
+            <div class="project-visual">
+                <div class="game-logo-area">
+                    <div class="game-logo-placeholder">LOGO<br>HERE</div>
+                    <span class="game-logo-title">Arrow Out</span>
+                </div>
+                <div class="screenshot-area">
+                    <div class="screenshot-placeholder">
+                        <div class="screenshot-icon">🏹</div>
+                        <div class="screenshot-label">Add gameplay screenshot<br><code>arrowout-screenshot.jpg</code></div>
                     </div>
                 </div>
+            </div>
 
-                <!-- PROJECT 2 -->
-                <div class="project-card">
-                    <div class="project-image">
-                        Game Screenshot Here
-                    </div>
-                    <div class="project-content">
-                        <h3>Game Title 2</h3>
-                        <p class="project-meta">Genre: Puzzle Game | Game Jam Entry | Team of 3</p>
-                        <p>
-                            Created during [Game Jam Name]. My role: [Programmer/Designer/etc.]. Implemented the 
-                            core puzzle mechanics and level progression system. Achieved [ranking/downloads/etc.].
-                        </p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Unity</span>
-                            <span class="tech-tag">C#</span>
-                            <span class="tech-tag">Puzzle</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="btn btn-primary" target="_blank">Play Game</a>
-                            <a href="#" class="btn btn-secondary" target="_blank">Devlog</a>
-                        </div>
-                    </div>
+            <div class="project-content">
+                <div class="project-number">02 / 05</div>
+                <h3>Arrow Out</h3>
+                <div class="project-meta">
+                    <span>Grid Puzzle</span>
+                    <span>Unity 2D · Android</span>
+                    <span>Solo Project</span>
                 </div>
-
-                <!-- PROJECT 3 -->
-                <div class="project-card">
-                    <div class="project-image">
-                        Game Screenshot Here
-                    </div>
-                    <div class="project-content">
-                        <h3>Game Title 3</h3>
-                        <p class="project-meta">Genre: RPG | Development Time: 6 months | Personal Project</p>
-                        <p>
-                            A narrative-driven RPG featuring [key features]. Built a custom dialogue system and 
-                            inventory management. This project taught me [what you learned].
-                        </p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Unity</span>
-                            <span class="tech-tag">C#</span>
-                            <span class="tech-tag">RPG Systems</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="btn btn-primary" target="_blank">Play Game</a>
-                            <a href="#" class="btn btn-secondary" target="_blank">GitHub</a>
-                        </div>
-                    </div>
+                <ul class="bullet-list">
+                    <li>Developed grid-based puzzle game with custom collision detection system and snake-like animation mechanics using Coroutines for smooth visual feedback.</li>
+                    <li>Architected Scriptable Object system for creating arrow levels easily and dynamically, eliminating code overhead and enabling rapid level design iteration.</li>
+                    <li>Integrated Unity Ads monetisation with rewarded video ads and interstitials, implementing ad frequency capping and user-experience optimisation.</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-tag">Unity 2D</span>
+                    <span class="tech-tag">C#</span>
+                    <span class="tech-tag">Scriptable Objects</span>
+                    <span class="tech-tag">Coroutines</span>
+                    <span class="tech-tag">Unity Ads</span>
+                    <span class="tech-tag">Android</span>
                 </div>
-
+                <div class="project-actions">
+                    <a href="YOUR_ITCH_OR_PLAY_LINK_HERE" class="btn btn-play" target="_blank">▶ Play Game</a>
+                    <a href="YOUR_YOUTUBE_GAMEPLAY_VIDEO_HERE" class="btn btn-video" target="_blank">▶ Gameplay Video</a>
+                    <!-- <a href="YOUR_GITHUB_REPO_HERE" class="btn btn-github" target="_blank">⌥ GitHub</a> -->
+                </div>
             </div>
         </div>
-    </section>
 
-    <section class="contact">
-        <div class="container">
-            <h2>Let's Work Together</h2>
-            <p>I'm currently open to job opportunities and collaborations.</p>
-            <a href="mailto:sahilvr66@gmail.com" class="contact-email">sahilvr66@gmail.com</a>
-        </div>
-    </section>
+        <!-- ────────────────── GAME 3 · VR INTERACTION ────────────── -->
+        <div class="project-card g3">
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 SAHIL. Built with passion for games.</p>
+            <div class="project-visual">
+                <div class="game-logo-area">
+                    <div class="game-logo-placeholder">LOGO<br>HERE</div>
+                    <span class="game-logo-title">VR Interaction System</span>
+                </div>
+                <div class="screenshot-area">
+                    <div class="screenshot-placeholder">
+                        <div class="screenshot-icon">🥽</div>
+                        <div class="screenshot-label">Add gameplay screenshot<br><code>vr-screenshot.jpg</code></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <div class="project-number">03 / 05</div>
+                <h3>VR Interaction System</h3>
+                <div class="project-meta">
+                    <span>Immersive VR</span>
+                    <span>Meta Quest</span>
+                    <span>Solo Project</span>
+                </div>
+                <ul class="bullet-list">
+                    <li>Developed immersive VR interaction application featuring physics-based object manipulation with realistic weight and momentum simulation.</li>
+                    <li>Engineered raycasting-based grab mechanics with distance-based interaction zones and haptic feedback integration for enhanced user experience.</li>
+                    <li>Implemented modular first-person movement controller with teleportation and smooth locomotion systems, supporting both VR headsets and desktop.</li>
+                    <li>Utilised Rigidbody physics, XR input handling, and spatial transformations with optimised performance for Meta Quest platform.</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-tag">Unity 3D</span>
+                    <span class="tech-tag">C#</span>
+                    <span class="tech-tag">Meta XR SDK</span>
+                    <span class="tech-tag">XR Toolkit</span>
+                    <span class="tech-tag">Rigidbody Physics</span>
+                </div>
+                <div class="project-actions">
+                    <a href="YOUR_ITCH_OR_DEMO_LINK_HERE" class="btn btn-play" target="_blank">▶ View Demo</a>
+                    <a href="YOUR_YOUTUBE_GAMEPLAY_VIDEO_HERE" class="btn btn-video" target="_blank">▶ Gameplay Video</a>
+                    <a href="YOUR_GITHUB_REPO_HERE" class="btn btn-github" target="_blank">⌥ GitHub</a>
+                </div>
+            </div>
         </div>
-    </footer>
+
+        <!-- ────────────────── GAME 4 · SKY WAR ────────────── -->
+        <div class="project-card reversed g4">
+
+            <div class="project-visual">
+                <div class="game-logo-area">
+                    <div class="game-logo-placeholder">LOGO<br>HERE</div>
+                    <span class="game-logo-title">Sky War</span>
+                </div>
+                <div class="screenshot-area">
+                    <div class="screenshot-placeholder">
+                        <div class="screenshot-icon">✈️</div>
+                        <div class="screenshot-label">Add gameplay screenshot<br><code>skywar-screenshot.jpg</code></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <div class="project-number">04 / 05</div>
+                <h3>Sky War</h3>
+                <div class="project-meta">
+                    <span>Top-Down Shooter</span>
+                    <span>Unity 3D · AI Integration</span>
+                    <span>Solo Project</span>
+                </div>
+                <ul class="bullet-list">
+                    <li>Designed a 3-level top-down action shooter with progressive difficulty curves, a comprehensive sound system, reward mechanics, and AI-generated UI assets.</li>
+                    <li>Implemented enemy AI with pathfinding algorithms, weapon systems with projectile physics, and score multiplier mechanics for enhanced gameplay depth.</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-tag">Unity 3D</span>
+                    <span class="tech-tag">C#</span>
+                    <span class="tech-tag">AI Integration</span>
+                    <span class="tech-tag">Pathfinding</span>
+                    <span class="tech-tag">Projectile Physics</span>
+                </div>
+                <div class="project-actions">
+                    <a href="YOUR_ITCH_OR_PLAY_LINK_HERE" class="btn btn-play" target="_blank">▶ Play Game</a>
+                    <a href="YOUR_YOUTUBE_GAMEPLAY_VIDEO_HERE" class="btn btn-video" target="_blank">▶ Gameplay Video</a>
+                    <!-- <a href="YOUR_GITHUB_REPO_HERE" class="btn btn-github" target="_blank">⌥ GitHub</a> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ────────────────── GAME 5 · MULTIPLAYER BOARD GAMES ────────────── -->
+        <div class="project-card g5">
+
+            <div class="project-visual">
+                <div class="game-logo-area">
+                    <div class="game-logo-placeholder">LOGO<br>HERE</div>
+                    <span class="game-logo-title">Board Games Suite</span>
+                </div>
+                <div class="screenshot-area">
+                    <div class="screenshot-placeholder">
+                        <div class="screenshot-icon">♟️</div>
+                        <div class="screenshot-label">Add gameplay screenshot<br><code>boardgames-screenshot.jpg</code></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <div class="project-number">05 / 05</div>
+                <h3>Multiplayer Board Games Suite</h3>
+                <div class="project-meta">
+                    <span>Ludo · Snake &amp; Ladder · Chess</span>
+                    <span>WebGL · Android · Play Store</span>
+                </div>
+                <ul class="bullet-list">
+                    <li>Created comprehensive board game collection — Ludo, Snake &amp; Ladder, Chess — with unified multiplayer architecture and shared PlayFab authentication (Email/Guest login).</li>
+                    <li>Built complete Ludo with AI opponents supporting 2/3/4 player modes, real-time turn-based logic, and integrated audio controls.</li>
+                    <li>Built Snake &amp; Ladder multiplayer with Netcode synchronisation, enhanced animations, dice rolling mechanics, and optimised cross-platform UI.</li>
+                    <li>Engineered full-featured Chess with save/undo, move validation, checkmate detection, castling, en passant, and multi-platform deployment (WebGL, Android, Play Store).</li>
+                    <li>Implemented shared game state management, persistent player profiles, and unified leaderboard infrastructure across all three games.</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-tag">Unity</span>
+                    <span class="tech-tag">C#</span>
+                    <span class="tech-tag">PlayFab</span>
+                    <span class="tech-tag">Netcode</span>
+                    <span class="tech-tag">AI Opponents</span>
+                    <span class="tech-tag">WebGL</span>
+                    <span class="tech-tag">Android</span>
+                </div>
+                <div class="project-actions">
+                    <a href="YOUR_ITCH_OR_PLAY_LINK_HERE" class="btn btn-play" target="_blank">▶ Play Game</a>
+                    <a href="YOUR_YOUTUBE_GAMEPLAY_VIDEO_HERE" class="btn btn-video" target="_blank">▶ Gameplay Video</a>
+                    <a href="YOUR_GITHUB_REPO_HERE" class="btn btn-github" target="_blank">⌥ GitHub</a>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /container -->
+</section>
+
+<!-- ═══════════════════════════════════════════ CONTACT ═══ -->
+<section class="contact">
+    <div class="container">
+        <div class="section-label" style="justify-content:center">Get in touch</div>
+        <h2>Let's build something<br><em>worth playing</em></h2>
+        <p>I'm open to job opportunities, collabs, and contract work. Drop me a line.</p>
+        <a href="mailto:sahilvr66@gmail.com" class="contact-email">sahilvr66@gmail.com</a>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Sahil Chaurasiya — Built with passion for games.</p>
+    </div>
+</footer>
+
 </body>
 </html>
