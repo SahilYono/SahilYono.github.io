@@ -432,6 +432,95 @@
             color: var(--accent);
             opacity: 0.7;
         }
+        
+        /* ═══ BOARD GAMES SUITE ═══ */
+.project-card-suite {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 36px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.project-card-suite:hover {
+    border-color: rgba(123,110,246,0.5);
+    box-shadow: 0 0 36px rgba(123,110,246,0.07);
+}
+
+.suite-header {
+    padding: 28px 34px 0;
+}
+
+.suite-header h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+}
+
+.suite-shared-bullets {
+    padding: 12px 34px 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.suite-games {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+}
+
+.suite-game {
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.suite-game:last-child { border-right: none; }
+
+.suite-game-visual { display: flex; flex-direction: column; }
+
+.suite-logo-area {
+    padding: 16px 18px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.suite-screenshot-area {
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+}
+
+.suite-game-content {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 12px;
+}
+
+.suite-game-content .bullet-list { margin-bottom: 0; flex: 1; }
+.suite-game-content .tech-stack  { margin-bottom: 0; }
+
+/* Responsive */
+@media (max-width: 960px) {
+    .suite-games { grid-template-columns: 1fr; }
+    .suite-game { border-right: none; border-bottom: 1px solid var(--border); }
+    .suite-game:last-child { border-bottom: none; }
+    .suite-screenshot-area { height: 200px; }
+}
+
+@media (max-width: 600px) {
+    .suite-header { padding: 20px 16px 0; }
+    .suite-shared-bullets { padding: 10px 16px 16px; }
+    .suite-game-content { padding: 14px; }
+}
 
         /* ─── Content side ─── */
         .project-content {
@@ -888,56 +977,128 @@
             </div>
         </div>
 
-        <!-- ── GAME 5 · BOARD GAMES SUITE ── -->
-        <div class="project-card g5">
-            <div class="project-visual">
-                <div class="game-logo-area">
-                    <!-- LOGO → replace this div with:
-                         <img src="boardgames-logo.png" class="game-logo-img" alt="Board Games Suite"> -->
+       <!-- ── GAME 5 · BOARD GAMES SUITE ── -->
+<div class="project-card-suite g5">
+    <div class="suite-header">
+        <div>
+            <h3>Multiplayer Board Games Suite</h3>
+            <div class="project-meta">
+                <span>Ludo · Snake &amp; Ladder · Chess</span>
+                <span>WebGL · Android · Play Store</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="suite-shared-bullets">
+        <ul class="bullet-list">
+            <li>Unified multiplayer architecture with shared PlayFab authentication (Email/Guest login) and persistent player profiles across all three games.</li>
+            <li>Implemented shared game state management and unified leaderboard infrastructure.</li>
+        </ul>
+    </div>
+
+    <div class="suite-games">
+
+        <!-- LUDO -->
+        <div class="suite-game">
+            <div class="suite-game-visual">
+                <div class="suite-logo-area">
+                    <!-- LOGO → <img src="ludo-logo.png" class="game-logo-img" alt="Ludo"> -->
                     <div class="game-logo-placeholder">LOGO</div>
-                    <span class="game-logo-title">Board Games Suite</span>
+                    <span class="game-logo-title">Ludo</span>
                 </div>
-                <div class="screenshot-area">
-                    <!-- SCREENSHOT → add inside this div:
-                         <img src="boardgames-ss.jpg" class="game-screenshot" alt="Board Games gameplay"> -->
-                    <div class="screenshot-placeholder">
-                        <div class="screenshot-icon">♟️</div>
-                        <div class="screenshot-label">Gameplay screenshot<br><code>boardgames-ss.jpg</code></div>
+                <div class="suite-screenshot-area">
+                    <!-- SCREENSHOT → <img src="ludo-ss.jpg" class="game-screenshot" alt="Ludo gameplay"> -->
+                    <div class="screenshot-placeholder" style="background:linear-gradient(135deg,#1a0a2e 0%,#3d1060 100%)">
+                        <div class="screenshot-icon">🎲</div>
                     </div>
                 </div>
             </div>
-            <div class="project-content">
-                <h3>Multiplayer Board Games Suite</h3>
-                <div class="project-meta">
-                    <span>Ludo · Snake &amp; Ladder · Chess</span>
-                    <span>WebGL · Android · Play Store</span>
-                </div>
+            <div class="suite-game-content">
                 <ul class="bullet-list">
-                    <li>Created comprehensive board game collection — Ludo, Snake &amp; Ladder, Chess — with unified multiplayer architecture and shared PlayFab authentication (Email/Guest login).</li>
-                    <li>Built complete Ludo with AI opponents supporting 2/3/4 player modes, real-time turn-based logic, and integrated audio controls.</li>
-                    <li>Built Snake &amp; Ladder multiplayer with Netcode synchronisation, enhanced animations, dice rolling mechanics, and optimised cross-platform UI.</li>
-                    <li>Engineered full-featured Chess with save/undo, move validation, checkmate detection, castling, en passant, and multi-platform deployment (WebGL, Android, Play Store).</li>
-                    <li>Implemented shared game state management, persistent player profiles, and unified leaderboard infrastructure across all three games.</li>
+                    <li>AI opponents supporting 2/3/4 player modes with real-time turn-based logic and integrated audio controls.</li>
                 </ul>
                 <div class="tech-stack">
                     <span class="tech-tag">Unity</span>
-                    <span class="tech-tag">C#</span>
                     <span class="tech-tag">PlayFab</span>
-                    <span class="tech-tag">Netcode</span>
-                    <span class="tech-tag">AI Opponents</span>
-                    <span class="tech-tag">WebGL</span>
+                    <span class="tech-tag">AI</span>
                     <span class="tech-tag">Android</span>
                 </div>
                 <div class="project-actions">
-                    <a href="YOUR_ITCH_OR_PLAY_LINK" class="btn btn-play" target="_blank">▶ Play Game</a>
-                    <a href="YOUR_YOUTUBE_LINK" class="btn btn-video" target="_blank">▶ Gameplay Video</a>
-                    <a href="YOUR_GITHUB_REPO" class="btn btn-github" target="_blank">⌥ GitHub</a>
+                    <a href="YOUR_LUDO_PLAY_LINK" class="btn btn-play" target="_blank">▶ Play</a>
+                    <a href="YOUR_LUDO_VIDEO_LINK" class="btn btn-video" target="_blank">▶ Video</a>
+                    <a href="YOUR_LUDO_GITHUB" class="btn btn-github" target="_blank">⌥ GitHub</a>
                 </div>
             </div>
         </div>
 
-    </div>
-</section>
+        <!-- SNAKE & LADDER -->
+        <div class="suite-game">
+            <div class="suite-game-visual">
+                <div class="suite-logo-area">
+                    <!-- LOGO → <img src="snl-logo.png" class="game-logo-img" alt="Snake & Ladder"> -->
+                    <div class="game-logo-placeholder">LOGO</div>
+                    <span class="game-logo-title">Snake &amp; Ladder</span>
+                </div>
+                <div class="suite-screenshot-area">
+                    <!-- SCREENSHOT → <img src="snl-ss.jpg" class="game-screenshot" alt="Snake & Ladder gameplay"> -->
+                    <div class="screenshot-placeholder" style="background:linear-gradient(135deg,#0a2e10 0%,#10602a 100%)">
+                        <div class="screenshot-icon">🐍</div>
+                    </div>
+                </div>
+            </div>
+            <div class="suite-game-content">
+                <ul class="bullet-list">
+                    <li>Netcode synchronisation with enhanced animations, dice rolling mechanics, and optimised cross-platform UI.</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-tag">Unity</span>
+                    <span class="tech-tag">Netcode</span>
+                    <span class="tech-tag">WebGL</span>
+                    <span class="tech-tag">Android</span>
+                </div>
+                <div class="project-actions">
+                    <a href="YOUR_SNL_PLAY_LINK" class="btn btn-play" target="_blank">▶ Play</a>
+                    <a href="YOUR_SNL_VIDEO_LINK" class="btn btn-video" target="_blank">▶ Video</a>
+                    <a href="YOUR_SNL_GITHUB" class="btn btn-github" target="_blank">⌥ GitHub</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHESS -->
+        <div class="suite-game">
+            <div class="suite-game-visual">
+                <div class="suite-logo-area">
+                    <!-- LOGO → <img src="chess-logo.png" class="game-logo-img" alt="Chess"> -->
+                    <div class="game-logo-placeholder">LOGO</div>
+                    <span class="game-logo-title">Chess</span>
+                </div>
+                <div class="suite-screenshot-area">
+                    <!-- SCREENSHOT → <img src="chess-ss.jpg" class="game-screenshot" alt="Chess gameplay"> -->
+                    <div class="screenshot-placeholder" style="background:linear-gradient(135deg,#1a1209 0%,#4a3010 100%)">
+                        <div class="screenshot-icon">♟️</div>
+                    </div>
+                </div>
+            </div>
+            <div class="suite-game-content">
+                <ul class="bullet-list">
+                    <li>Save/undo system, full move validation, checkmate detection, castling, en passant, and Play Store deployment.</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-tag">Unity</span>
+                    <span class="tech-tag">C#</span>
+                    <span class="tech-tag">WebGL</span>
+                    <span class="tech-tag">Play Store</span>
+                </div>
+                <div class="project-actions">
+                    <a href="YOUR_CHESS_PLAY_LINK" class="btn btn-play" target="_blank">▶ Play</a>
+                    <a href="YOUR_CHESS_VIDEO_LINK" class="btn btn-video" target="_blank">▶ Video</a>
+                    <a href="YOUR_CHESS_GITHUB" class="btn btn-github" target="_blank">⌥ GitHub</a>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /suite-games -->
+</div>
 
 <!-- ══════════════════ CONTACT ══ -->
 <section class="contact">
